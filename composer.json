@@ -1,0 +1,16 @@
+{
+  "require": {
+    "squizlabs/php_codesniffer": "*"
+
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^2.3",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+    "phpcompatibility/php-compatibility": "^9.3"
+  },
+  "scripts": {
+    "phpcs": "phpcs --standard=WordPress",
+    "cs": "phpcs --standard=phpcs.xml .",
+    "cbf": "phpcbf --standard=phpcs.xml ."
+  }
+}
