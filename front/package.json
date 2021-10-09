@@ -11,6 +11,8 @@
     "@wordpress/eslint-plugin": "^9.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-dropzone": "^11.4.2",
+    "react-image-file-resizer": "^0.4.7",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
   },
