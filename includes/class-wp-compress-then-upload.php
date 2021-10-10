@@ -19,6 +19,8 @@ class WP_Compress_Then_Upload {
 
 		$this->register_scripts();
 		$this->add_admin_menu();
+		WPCTU_Endpoints::init();
+
 	}
 
 	/**

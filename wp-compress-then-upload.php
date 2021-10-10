@@ -10,6 +10,8 @@
 
 require 'includes/class-wp-compress-then-upload.php';
 require 'includes/class-wpctu-assets.php';
+require 'includes/class-wpctu-endpoints.php';
+
 const WPCTU_PREFIX = 'wpctu_';
 const WPCTU_TITLE  = 'Compress Then Upload';
 
@@ -22,6 +24,8 @@ function init_plugin() {
 	$plugin->init();
 
 }
+
+
 
 
 
