@@ -7,37 +7,49 @@ import Api from '../services/api';
 
 function DropZone(props) {
 	const [files, setFiles] = useState([]);
+	const maxFiles = 8;
+	const maxSize = 50000000;
+	const status = 'idle';
 
-	const { getRootProps, getInputProps } = useDropzone({
+	const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
 		accept: 'image/jpeg, image/png',
-		maxFiles: 6,
+		maxFiles,
+		maxSize, //50mb limit,
+
 		onDrop: (acceptedFiles) => {
+			/**
+			 *  TODO: add current files to state
+			 *  and process one by one
+			 */
+
 			resizeImages(acceptedFiles);
 		},
 	});
 
+	const fileRejectionItems = fileRejections.map(({ file, errors }) => (
+		<li key={file.path}>
+			{file.path} - {(file.size / 1000000).toFixed(2)} MB
+			<ul>
+				{errors.map((e) => (
+					<li key={e.code}>{e.message}</li>
+				))}
+			</ul>
+		</li>
+	));
 	const clearImages = () => {
 		// Make sure to revoke the data uris to avoid memory leaks
 		files.forEach((file) => URL.revokeObjectURL(file.url));
 	};
 
 	const setImageURL = (acceptedfiles, uri, name) => {
-		console.log('done resizing image', uri);
 		const urlCreator = window.URL || window.webkitURL;
 		const imageUrl = urlCreator.createObjectURL(uri);
-		console.log(imageUrl);
-
-		//I think I need to get the index of the current file in files
-		// send name too?
-
 		return updateFileByName(acceptedfiles, name, 'url', imageUrl);
 	};
 
 	const updateFileByName = (fileList, name, key, value) => {
 		const fileIndex = fileList.findIndex((file) => file.name === name);
 		//need to create method to update a single file
-
-		console.log('file index by: ', name, fileList, fileIndex);
 
 		const newFiles = [...fileList];
 		newFiles[fileIndex][key] = value;
@@ -62,20 +74,18 @@ function DropZone(props) {
 	};
 
 	const resizeImages = (acceptedFiles) => {
-		//Todo: show proper message for rejected files and test them
 		//Todo: lock further upload of files
-		console.log(acceptedFiles);
 		clearImages();
 
 		for (const file of acceptedFiles) {
 			try {
 				Resizer.imageFileResizer(
 					file,
-					3000,
-					3000,
+					1024,
+					1024,
 					'JPEG',
-					100,
-					90,
+					80,
+					0,
 					(uri) => {
 						resizeCallback(acceptedFiles, uri, file.name);
 					},
@@ -95,20 +105,20 @@ function DropZone(props) {
 	 * @param  file
 	 */
 	const uploadFile = (currentFiles, name, file) => {
-		Api.upload(file, (event) => {
+		Api.upload({ file, name }, (event) => {
 			const progress = Math.round((100 * event.loaded) / event.total);
 			setFiles(
 				updateFileByName(currentFiles, name, 'progress', progress)
 			);
 		})
 			.then((response) => {
-				console.log(response.data);
+				const status = response.status === 200 ? 'done' : 'error';
 				setFiles(
-					updateFileByName(currentFiles, name, 'status', 'done')
+					updateFileByName(currentFiles, name, 'status', status)
 				);
 			})
 			.catch(() => {
-				console.log('Could not upload the file!');
+				updateFileByName(currentFiles, name, 'status', 'error');
 			});
 	};
 
@@ -116,15 +126,30 @@ function DropZone(props) {
 		<section className="container">
 			<div {...getRootProps({ className: 'dropzone' })}>
 				<Thumbs files={files} />
-				<p>{JSON.stringify(files)}</p>
 
 				<input {...getInputProps()} />
 				{/*TODO: conditionally show this message below*/}
-				<p>Drag images to upload...</p>
+				{!files.length && <p>Drag images to upload </p>}
 			</div>
+			<small>
+				(max {maxFiles} images at a time and max {maxSize / 1000000}MB
+				per image)
+			</small>
 			<p>
-				<br />
+				<a
+					className="btn btn-success"
+					// disabled={!selectedFiles}
+					onClick={open}
+				>
+					Upload
+				</a>
 			</p>
+			{fileRejectionItems.length > 0 && (
+				<div style={{ textAlign: 'left' }}>
+					<h4>Error list</h4>
+					<ul>{fileRejectionItems}</ul>
+				</div>
+			)}
 		</section>
 	);
 }

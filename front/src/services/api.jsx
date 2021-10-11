@@ -3,7 +3,8 @@ import http from './http';
 class Api {
 	upload(file, onUploadProgress) {
 		const formData = new FormData();
-		formData.append('file', file);
+
+		formData.append('file', file.file, file.name);
 
 		return http.post('/upload', formData, {
 			headers: {

@@ -5,9 +5,8 @@ function thumbs(props) {
 
 	const progress = (file) => (
 		<p>
-			{file.status}
 			<span> </span>
-			{file.progress < 100 && file.progress + '%'}
+			{file.progress + '%'}
 		</p>
 	);
 
@@ -17,10 +16,11 @@ function thumbs(props) {
 				<div key={file.name}>
 					<div className="thumb">
 						<div>
-							<img src={file.url} alt={file.name} />
+							{file.url && <img src={file.url} alt={file.name} />}
 						</div>
 					</div>
-					{progress(file)}
+					<p>{file.status}</p>
+					{file.progress < 100 && progress(file)}
 				</div>
 			))}
 		</aside>
