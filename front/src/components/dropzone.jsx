@@ -7,9 +7,9 @@ import Api from '../services/api';
 
 function DropZone(props) {
 	const [files, setFiles] = useState([]);
+	const [status, setStatus] = useState('idle');
 	const maxFiles = 8;
 	const maxSize = 50000000;
-	const status = 'idle';
 
 	const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
 		accept: 'image/jpeg, image/png',
@@ -17,10 +17,12 @@ function DropZone(props) {
 		maxSize, //50mb limit,
 
 		onDrop: (acceptedFiles) => {
-			/**
-			 *  TODO: add current files to state
-			 *  and process one by one
-			 */
+			if (status === 'uploading') {
+				alert('Wait until your current images upload');
+				return false;
+			}
+			setFiles(acceptedFiles);
+			setStatus('uploading');
 
 			resizeImages(acceptedFiles);
 		},
@@ -49,7 +51,6 @@ function DropZone(props) {
 
 	const updateFileByName = (fileList, name, key, value) => {
 		const fileIndex = fileList.findIndex((file) => file.name === name);
-		//need to create method to update a single file
 
 		const newFiles = [...fileList];
 		newFiles[fileIndex][key] = value;
@@ -73,12 +74,23 @@ function DropZone(props) {
 		uploadFile(currentFiles, name, uri);
 	};
 
+	const allFilesDone = (allFilesDone) => {
+		console.log('checking if files are done');
+		for (const file of allFilesDone) {
+			if (file.status === 'uploading') {
+				return false;
+			}
+		}
+		setStatus('idle');
+	};
+
 	const resizeImages = (acceptedFiles) => {
 		//Todo: lock further upload of files
 		clearImages();
 
 		for (const file of acceptedFiles) {
 			try {
+				console.log('processing : ', file);
 				Resizer.imageFileResizer(
 					file,
 					1024,
@@ -97,13 +109,6 @@ function DropZone(props) {
 		}
 	};
 
-	/**
-	 * Todo: Maybe I should process file by file?
-	 *
-	 * @param  currentFiles
-	 * @param  name
-	 * @param  file
-	 */
 	const uploadFile = (currentFiles, name, file) => {
 		Api.upload({ file, name }, (event) => {
 			const progress = Math.round((100 * event.loaded) / event.total);
@@ -116,6 +121,8 @@ function DropZone(props) {
 				setFiles(
 					updateFileByName(currentFiles, name, 'status', status)
 				);
+
+				allFilesDone(currentFiles);
 			})
 			.catch(() => {
 				updateFileByName(currentFiles, name, 'status', 'error');
