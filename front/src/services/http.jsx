@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-	baseURL: 'http://localhost:10004/wp-json/wpctu-api/v1',
+	baseURL: window.wpctu_ajax.urls.baseURL,
 	headers: {
 		'Content-type': 'application/json',
 	},

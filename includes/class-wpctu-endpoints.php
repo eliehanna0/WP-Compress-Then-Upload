@@ -6,11 +6,9 @@ class WPCTU_Endpoints {
 	private $namespace = 'wpctu-api/';
 	private $version   = 'v1';
 
-	public function __construct() {
-		$this->add_endpoints();
-	}
 
-	private function get_api_namespace() {
+
+	public function get_api_namespace() {
 		return $this->namespace . $this->version;
 	}
 	public function add_endpoints() {
@@ -32,22 +30,31 @@ class WPCTU_Endpoints {
 
 	public function api_callback() {
 
-		print_r($_FILES);
-		print_r($_REQUEST);
+		print_r( $_FILES );
+		print_r( $_REQUEST );
 
-
-		return new WP_REST_RESPONSE(array(
-			'success' => true,
-			'value'   => array(
-				'bla'  => "blah",
-				'blu' => "bluh",
-			)
-		), 200);
+		return new WP_REST_RESPONSE(
+			array(
+				'success' => true,
+				'value'   => array(
+					'bla' => 'blah',
+					'blu' => 'bluh',
+				),
+			),
+			200
+		);
 	}
 
 
-	public  static  function init() {
-		new self();
+	public static function register_endpoints() {
+		$instance = new self();
+		$instance->add_endpoints();
+
+	}
+
+	public  static  function get_rest_url( $endpoint ) {
+		$instance = new self();
+		return rest_url( $instance->get_api_namespace() . $endpoint );
 	}
 
 }

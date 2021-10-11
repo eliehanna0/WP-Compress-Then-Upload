@@ -26,6 +26,8 @@ class WPCTU_Assets {
 		} else {
 			$this->register_prod_scripts();
 		}
+
+		$this->localize_scripts();
 	}
 
 	/**
@@ -83,5 +85,19 @@ class WPCTU_Assets {
 	public function enqueue() {
 		wp_enqueue_script( WPCTU_PREFIX . 'react_js', '1.0', true );
 		wp_enqueue_style( WPCTU_PREFIX . 'react_css' );
+	}
+
+	private function localize_scripts() {
+		wp_localize_script(
+			WPCTU_PREFIX . 'react_js',
+			WPCTU_PREFIX . 'ajax',
+			array(
+				'urls'  => array(
+					'baseURL' => WPCTU_Endpoints::get_rest_url( '' ),
+					'upload'  => WPCTU_Endpoints::get_rest_url( '/upload' ),
+				),
+				'nonce' => wp_create_nonce( 'wp_rest' ),
+			)
+		);
 	}
 }

@@ -19,8 +19,7 @@ class WP_Compress_Then_Upload {
 
 		$this->register_scripts();
 		$this->add_admin_menu();
-		WPCTU_Endpoints::init();
-
+		WPCTU_Endpoints::register_endpoints();
 	}
 
 	/**
@@ -31,6 +30,8 @@ class WP_Compress_Then_Upload {
 		$this->assets->register_scripts();
 
 	}
+
+
 
 	/**
 	 * Adds the plugin page under Media as a submenu
