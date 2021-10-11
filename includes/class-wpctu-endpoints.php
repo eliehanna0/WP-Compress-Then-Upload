@@ -25,7 +25,12 @@ class WPCTU_Endpoints {
 	}
 
 	public function check_permission() {
-		return true;
+
+		if ( current_user_can( 'manage_options' ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public function api_callback() {
