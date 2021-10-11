@@ -7,7 +7,6 @@ class WPCTU_Endpoints {
 	private $version   = 'v1';
 
 	public function __construct() {
-
 		$this->add_endpoints();
 	}
 
@@ -32,8 +31,20 @@ class WPCTU_Endpoints {
 	}
 
 	public function api_callback() {
-		return true;
+
+		print_r($_FILES);
+		print_r($_REQUEST);
+
+
+		return new WP_REST_RESPONSE(array(
+			'success' => true,
+			'value'   => array(
+				'bla'  => "blah",
+				'blu' => "bluh",
+			)
+		), 200);
 	}
+
 
 	public  static  function init() {
 		new self();

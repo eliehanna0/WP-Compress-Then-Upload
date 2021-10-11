@@ -1,11 +1,10 @@
 import './App.css';
-// eslint-disable-next-line import/no-unresolved
-import ImageUploader from './components/imageUploader';
+import WPCTU from './components/WPCTU';
 
 const App = () => {
 	return (
 		<div className="App">
-			<ImageUploader />
+			<WPCTU />
 		</div>
 	);
 };

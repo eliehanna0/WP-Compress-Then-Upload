@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DropZone from './dropzone';
 
-class ImageUploader extends Component {
+class WPCTU extends Component {
 	render() {
 		return (
 			<div className="App">
@@ -11,4 +11,4 @@ class ImageUploader extends Component {
 	}
 }
 
-export default ImageUploader;
+export default WPCTU;
