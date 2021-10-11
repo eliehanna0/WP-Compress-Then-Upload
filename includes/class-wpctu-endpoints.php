@@ -34,26 +34,28 @@ class WPCTU_Endpoints {
 	}
 
 	public function api_callback() {
+		try {
+			new WPCTU_Upload_Image();
 
-		print_r( $_FILES );
-		print_r( $_REQUEST );
-
-		return new WP_REST_RESPONSE(
-			array(
-				'success' => true,
-				'value'   => array(
-					'bla' => 'blah',
-					'blu' => 'bluh',
+			return new WP_REST_RESPONSE(
+				array(
+					'success' => true,
+					'data'    => array(),
 				),
-			),
-			200
-		);
+				200
+			);
+
+		} catch ( Exception $e ) {
+			return new WP_Error( 'wpctu_error', $e->getMessage(), array( 'status' => 400 ) );
+
+		}
+
 	}
 
 
 	public static function register_endpoints() {
 		$instance = new self();
-		$instance->add_endpoints();
+		add_action( 'rest_api_init', array( $instance, 'add_endpoints' ) );
 
 	}
 
