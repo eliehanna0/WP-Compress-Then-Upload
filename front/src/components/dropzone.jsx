@@ -4,11 +4,14 @@ import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
 import Thumbs from './thumbs';
 import Api from '../services/api';
+import { Button, Typography } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 function DropZone(props) {
 	const [files, setFiles] = useState([]);
 	const [status, setStatus] = useState('idle');
-	const maxFiles = 8;
+	const [errorMessage, setErrorMessage] = useState('');
+	const maxFiles = 16;
 	const maxSize = 50000000;
 
 	const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
@@ -62,6 +65,8 @@ function DropZone(props) {
 		/**
 		 * I'm pretty sure there must be a cleaner way to do this
 		 */
+
+		setErrorMessage('');
 		currentFiles = setImageURL(currentFiles, uri, name);
 		currentFiles = updateFileByName(
 			currentFiles,
@@ -75,7 +80,6 @@ function DropZone(props) {
 	};
 
 	const allFilesDone = (allFilesDone) => {
-		console.log('checking if files are done');
 		for (const file of allFilesDone) {
 			if (file.status === 'uploading') {
 				return false;
@@ -90,7 +94,6 @@ function DropZone(props) {
 
 		for (const file of acceptedFiles) {
 			try {
-				console.log('processing : ', file);
 				Resizer.imageFileResizer(
 					file,
 					1024,
@@ -104,7 +107,7 @@ function DropZone(props) {
 					'blob'
 				);
 			} catch (err) {
-				console.log(err);
+				setErrorMessage(err);
 			}
 		}
 	};
@@ -138,24 +141,27 @@ function DropZone(props) {
 				{/*TODO: conditionally show this message below*/}
 				{!files.length && <p>Drag images to upload </p>}
 			</div>
-			<small>
+
+			<Typography
+				variant="caption"
+				display="block"
+				gutterBottom
+				style={{ opacity: 0.6 }}
+			>
 				(max {maxFiles} images at a time and max {maxSize / 1000000}MB
 				per image)
-			</small>
+			</Typography>
 			<p>
-				<a
-					className="btn btn-success"
-					// disabled={!selectedFiles}
-					onClick={open}
-				>
-					Upload
-				</a>
+				<Button variant="contained" onClick={open} color="primary">
+					Upload Images
+				</Button>
 			</p>
-			{fileRejectionItems.length > 0 && (
-				<div style={{ textAlign: 'left' }}>
-					<h4>Error list</h4>
+			{(fileRejectionItems.length > 0 || errorMessage) && (
+				<Alert style={{ textAlign: 'left' }} severity="error">
+					<AlertTitle>Error</AlertTitle>
+					<strong>{errorMessage}</strong>
 					<ul>{fileRejectionItems}</ul>
-				</div>
+				</Alert>
 			)}
 		</section>
 	);

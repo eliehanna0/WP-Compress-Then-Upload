@@ -57,12 +57,24 @@
   display: inline-flex;
   border-radius: 2px;
   border: 1px solid #eaeaea;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   margin-right: 8px;
   width: 100px;
   height: 100px;
   padding: 4px;
   box-sizing: border-box;
+  position: relative;
+  > .loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    .MuiCircularProgress-svg{
+      background-color:white;
+      border-radius:50%;
+      padding:4px;
+    }
+  }
   > div{
     display: flex;
     minWidth: 0;
@@ -76,4 +88,11 @@
   }
   }
 
+.success_check.success_check{
+  background-color: #4caf50;
+  border: 2px solid white;
+  svg{
+    color: white;
+  }
+}
 

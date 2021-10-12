@@ -44,12 +44,22 @@
   display: inline-flex;
   border-radius: 2px;
   border: 1px solid #eaeaea;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   margin-right: 8px;
   width: 100px;
   height: 100px;
   padding: 4px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  position: relative; }
+  .thumb > .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    .thumb > .loader .MuiCircularProgress-svg {
+      background-color: white;
+      border-radius: 50%;
+      padding: 4px; }
   .thumb > div {
     display: flex;
     minWidth: 0;
@@ -58,5 +68,11 @@
       display: block;
       width: auto;
       height: 100%; }
+
+.success_check.success_check {
+  background-color: #4caf50;
+  border: 2px solid white; }
+  .success_check.success_check svg {
+    color: white; }
 
 /*# sourceMappingURL=App.css.map */

@@ -27,9 +27,6 @@ function init_plugin() {
 }
 
 
-
-
-
 add_action( 'init', 'init_plugin' );
 
 
