@@ -21,8 +21,6 @@ class WP_Compress_Then_Upload {
 		$this->add_admin_menu();
 		WPCTU_Endpoints::register_endpoints();
 
-
-
 	}
 
 	/**

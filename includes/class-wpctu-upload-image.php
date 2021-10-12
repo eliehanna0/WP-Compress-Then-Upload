@@ -45,7 +45,6 @@ class  WPCTU_Upload_Image {
 	private function upload_files() {
 		$file = $this->files['file'];
 
-
 		$gallery = array();
 
 		$wordpress_upload_dir = wp_upload_dir();

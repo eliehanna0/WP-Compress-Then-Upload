@@ -13,7 +13,7 @@ class WPCTU_Assets {
 	/**
 	 * @var string
 	 */
-	private $front_path = '/front/build/static';
+	private $front_path = 'front/build/static';
 
 	/**
 	 * Register relative scripts depending on the environment
@@ -36,6 +36,7 @@ class WPCTU_Assets {
 	 * @return bool
 	 */
 	private function is_dev_env(): bool {
+		return false;
 		return in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ), true );
 	}
 
@@ -58,7 +59,8 @@ class WPCTU_Assets {
 	 * @return string
 	 */
 	private function get_prod_file_path( $file = '' ) {
-		return plugins_url( $this->front_path . $file, __FILE__ );
+
+		return WPCTU_URL . $this->front_path . $file;
 	}
 
 	/**
@@ -76,7 +78,7 @@ class WPCTU_Assets {
 	 */
 	private function register_prod_scripts() {
 		wp_register_script( WPCTU_PREFIX . 'react_js', $this->get_prod_file_path( '/js/main.js' ) );
-		wp_register_style( WPCTU_PREFIX . 'react_css', plugins_url( $this->get_prod_file_path( '/css/main.css' ), __FILE__ ) );
+		wp_register_style( WPCTU_PREFIX . 'react_css', $this->get_prod_file_path( '/css/main.css' ) );
 	}
 
 	/**
