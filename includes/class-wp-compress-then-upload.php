@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * Bootstraps all plugin components.
  */
 class WP_Compress_Then_Upload {
 	/**

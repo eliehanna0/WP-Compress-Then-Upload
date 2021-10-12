@@ -1,19 +1,22 @@
 <?php
-
 /**
- *
+ * Takes care of importing all JS and CSS needed for the app to function
  */
 class WPCTU_Assets {
 
 	/**
+	 * Development path to app files
+	 *
 	 * @var string
 	 */
-	private $dev_path = 'http://localhost:3000/wp-content/plugins/wp-compress-then-upload';
+	private string $dev_path = 'http://localhost:3000/wp-content/plugins/wp-compress-then-upload';
 
 	/**
+	 * The top level directory in which assets are going to be loaded from.
+	 *
 	 * @var string
 	 */
-	private $front_path = 'front/build/static';
+	private string $front_path = 'front/build/static';
 
 	/**
 	 * Register relative scripts depending on the environment
@@ -35,9 +38,12 @@ class WPCTU_Assets {
 	 *
 	 * @return bool
 	 */
-	private function is_dev_env(): bool {
+	private function is_dev_env() {
+		/**
+		 * I want to force loading the production files for now
+		 */
 		return false;
-		return in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ), true );
+		// return in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ), true );
 	}
 
 	/**
@@ -89,6 +95,9 @@ class WPCTU_Assets {
 		wp_enqueue_style( WPCTU_PREFIX . 'react_css' );
 	}
 
+	/**
+	 * This function allows our app to use the API securely
+	 */
 	private function localize_scripts() {
 		wp_localize_script(
 			WPCTU_PREFIX . 'react_js',
