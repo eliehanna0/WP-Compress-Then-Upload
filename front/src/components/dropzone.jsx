@@ -15,7 +15,7 @@ function DropZone(props) {
 	const maxSize = 50000000;
 
 	const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
-		accept: 'image/jpeg, image/png',
+		accept: 'image/jpeg, image/png, image/webp',
 		maxFiles,
 		maxSize, //50mb limit,
 
@@ -138,7 +138,6 @@ function DropZone(props) {
 				<Thumbs files={files} />
 
 				<input {...getInputProps()} />
-				{/*TODO: conditionally show this message below*/}
 				{!files.length && <p>Drag images to upload </p>}
 			</div>
 
