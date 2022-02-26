@@ -9,7 +9,7 @@ class WPCTU_Assets {
 	 *
 	 * @var string
 	 */
-	private string $dev_path = 'http://localhost:3000/wp-content/plugins/wp-compress-then-upload';
+	private string $dev_path = 'http://localhost:3000/wp-content/plugins/wp-compress-then-upload/';
 
 	/**
 	 * The top level directory in which assets are going to be loaded from.
@@ -23,9 +23,7 @@ class WPCTU_Assets {
 	 */
 	public function register_scripts() {
 		if ( $this->is_dev_env() ) {
-
 			$this->register_dev_scripts();
-
 		} else {
 			$this->register_prod_scripts();
 		}
@@ -38,12 +36,14 @@ class WPCTU_Assets {
 	 *
 	 * @return bool
 	 */
-	private function is_dev_env() {
-		/**
-		 * I want to force loading the production files for now
-		 */
+	private function is_dev_env(): bool {
+
+		if ( defined( 'WPCTU_DEV_ENV' ) ) {
+			return WPCTU_DEV_ENV;
+		}
+
 		return false;
-		// return in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ), true );
+
 	}
 
 	/**
