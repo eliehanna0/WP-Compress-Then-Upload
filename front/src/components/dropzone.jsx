@@ -11,6 +11,7 @@ function DropZone(props) {
 	const [files, setFiles] = useState([]);
 	const [status, setStatus] = useState('idle');
 	const [errorMessage, setErrorMessage] = useState('');
+	const validCompressionFormats = ['JPEG', 'PNG', 'WEBP'];
 	const maxFiles = 16;
 	const maxSize = 50000000;
 
@@ -88,6 +89,14 @@ function DropZone(props) {
 		setStatus('idle');
 	};
 
+	const getFileFormat = (file) => {
+		const fileFormat = file.type.split('/')[1].toUpperCase();
+
+		return validCompressionFormats.includes(fileFormat)
+			? fileFormat
+			: 'JPEG';
+	};
+
 	const resizeImages = (acceptedFiles) => {
 		//Todo: lock further upload of files
 		clearImages();
@@ -98,7 +107,7 @@ function DropZone(props) {
 					file,
 					1024,
 					1024,
-					'JPEG',
+					getFileFormat(file),
 					80,
 					0,
 					(uri) => {
