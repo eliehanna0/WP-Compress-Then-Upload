@@ -27,6 +27,8 @@ function init_plugin() {
 	$plugin = new WP_Compress_Then_Upload();
 	$plugin->init();
 
+	$settings = new WPCTU_Settings();
+
 }
 
 

@@ -52,8 +52,6 @@ class WP_Compress_Then_Upload {
 	 */
 	function admin_page() {
 		$this->assets->enqueue();
-		$settings = new WPCTU_Settings();
-		var_dump($settings->get());
 
 		?>
 		<div id="wpctu_root">
