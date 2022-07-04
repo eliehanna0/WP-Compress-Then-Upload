@@ -4,7 +4,8 @@ import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
 import Thumbs from './thumbs';
 import Api from '../services/api';
-import { Button, Typography } from '@material-ui/core';
+import Settings from './settings';
+import { Box, Button, Typography } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 function DropZone(props) {
@@ -13,7 +14,8 @@ function DropZone(props) {
 	const [errorMessage, setErrorMessage] = useState('');
 	const validCompressionFormats = ['JPEG', 'PNG', 'WEBP'];
 	const maxFiles = 16;
-	const maxSize = 50000000;
+	const maxSize = 50000000; //that's 50mb
+	const [settings, setSettings] = useState();
 
 	const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
 		accept: 'image/jpeg, image/png, image/webp',
@@ -100,15 +102,14 @@ function DropZone(props) {
 	const resizeImages = (acceptedFiles) => {
 		//Todo: lock further upload of files
 		clearImages();
-
 		for (const file of acceptedFiles) {
 			try {
 				Resizer.imageFileResizer(
 					file,
-					1024,
-					1024,
+					settings.max_width,
+					settings.max_height,
 					getFileFormat(file),
-					80,
+					settings.quality,
 					0,
 					(uri) => {
 						resizeCallback(acceptedFiles, uri, file.name);
@@ -141,15 +142,24 @@ function DropZone(props) {
 			});
 	};
 
+	const updateSettings = (newSettings) => {
+		setSettings(newSettings);
+	};
+
 	return (
 		<section className="container">
+			{/*{JSON.stringify(settings)}*/}
+			<Box textAlign="left">
+				<Typography variant="h5" gutterBottom>
+					Compress Then Upload Images
+				</Typography>
+			</Box>
 			<div {...getRootProps({ className: 'dropzone' })}>
 				<Thumbs files={files} />
 
 				<input {...getInputProps()} />
 				{!files.length && <p>Drag images to upload </p>}
 			</div>
-
 			<Typography
 				variant="caption"
 				display="block"
@@ -171,6 +181,8 @@ function DropZone(props) {
 					<ul>{fileRejectionItems}</ul>
 				</Alert>
 			)}
+
+			<Settings onUpdate={updateSettings} />
 		</section>
 	);
 }

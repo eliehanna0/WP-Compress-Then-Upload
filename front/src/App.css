@@ -75,4 +75,18 @@
   .success_check.success_check svg {
     color: white; }
 
+.wpctu_settings_form input[type=text],
+.wpctu_settings_form input[type=number] {
+  color: currentColor;
+  border: 0;
+  padding: 6px 0 7px;
+  min-height: auto;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  background-color: inherit; }
+  .wpctu_settings_form input[type=text].MuiFilledInput-input,
+  .wpctu_settings_form input[type=number].MuiFilledInput-input {
+    padding: 27px 12px 10px; }
+
 /*# sourceMappingURL=App.css.map */
