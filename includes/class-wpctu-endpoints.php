@@ -85,6 +85,10 @@ class WPCTU_Endpoints {
 
 	/**
 	 * Handles updating settings
+	 *
+	 * @param WP_REST_Request $request Rest API Request object.
+	 *
+	 * @return WP_Error|WP_REST_RESPONSE
 	 */
 	public function api_update_settings( $request ) {
 		try {
@@ -118,7 +122,7 @@ class WPCTU_Endpoints {
 	/**
 	 * Returns the full rest url of a given endpoint.
 	 *
-	 * @param $endpoint
+	 * @param string $endpoint Endpoint name.
 	 *
 	 * @return string
 	 */

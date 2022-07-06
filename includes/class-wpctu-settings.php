@@ -54,6 +54,7 @@ class  WPCTU_Settings {
 	 *
 	 * @param array $new_settings Array of new settings.
 	 *
+	 * @return array New Settings
 	 * @throws Exception Invalid setting name or out of bound value exception.
 	 */
 	public function save( array $new_settings = array() ) {
