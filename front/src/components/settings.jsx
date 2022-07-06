@@ -50,6 +50,7 @@ const Settings = (props) => {
 
 	const updateSettings = () => {
 		setLoading(true);
+		setModified(false);
 		Api.updateSettings(settings)
 			.then((response) => {
 				props.onUpdate(settings);

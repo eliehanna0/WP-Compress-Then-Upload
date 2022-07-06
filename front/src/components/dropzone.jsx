@@ -13,8 +13,8 @@ function DropZone(props) {
 	const [status, setStatus] = useState('idle');
 	const [errorMessage, setErrorMessage] = useState('');
 	const validCompressionFormats = ['JPEG', 'PNG', 'WEBP'];
-	const maxFiles = 16;
-	const maxSize = 50000000; //that's 50mb
+	const maxFiles = 120;
+	const maxSize = 100000000; // 1000000 = 1MB
 	const [settings, setSettings] = useState();
 
 	const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
