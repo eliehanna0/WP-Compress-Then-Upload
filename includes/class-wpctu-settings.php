@@ -76,6 +76,7 @@ class  WPCTU_Settings {
 
 		$this->settings = $settings;
 		update_option( $this->option_index, $this->settings );
+		return $this->settings;
 	}
 
 	/**

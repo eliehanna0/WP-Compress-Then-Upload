@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Api from '../services/api';
 import {
 	Box,
 	Button,
@@ -10,10 +11,24 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
+import CheckIcon from '@material-ui/icons/Check';
+import green from '@material-ui/core/colors/green';
 
 const Settings = (props) => {
 	const [settings, setSettings] = useState(window.wpctu_ajax.settings);
 	const [showSettings, setShowSettings] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [modified, setModified] = useState(false);
+	const [error, setError] = useState('');
+	const [success, setSuccess] = useState(false);
+
+	const resetStates = () => {
+		setSuccess(false);
+		setModified(true);
+		setError(false);
+	};
 
 	const handleChange = (event) => {
 		const newSettings = {
@@ -21,10 +36,7 @@ const Settings = (props) => {
 			[event.target.name]: event.target.value,
 		};
 		setSettings(newSettings);
-	};
-
-	const updateSettings = () => {
-		props.onUpdate(settings);
+		resetStates();
 	};
 
 	const handleSliderChange = (event, newValue) => {
@@ -33,6 +45,23 @@ const Settings = (props) => {
 			quality: newValue,
 		};
 		setSettings(newSettings);
+		resetStates();
+	};
+
+	const updateSettings = () => {
+		setLoading(true);
+		Api.updateSettings(settings)
+			.then((response) => {
+				props.onUpdate(settings);
+				setSuccess(true);
+			})
+			.catch((responseError) => {
+				setError(responseError.response.data.message);
+			})
+			.finally(() => {
+				setLoading(false);
+				setModified(false);
+			});
 	};
 
 	const toggleSettings = () => {
@@ -40,7 +69,7 @@ const Settings = (props) => {
 	};
 
 	useEffect(() => {
-		updateSettings(settings);
+		props.onUpdate(settings);
 	}, []);
 
 	return (
@@ -61,7 +90,6 @@ const Settings = (props) => {
 			</Grid>
 			{showSettings && (
 				<form
-					xs={12}
 					className="wpctu_settings_form"
 					noValidate
 					autoComplete="off"
@@ -113,13 +141,27 @@ const Settings = (props) => {
 							</Grid>
 						</Grid>
 						<Grid item xs={2}>
-							<Button
-								color="primary"
-								variant="contained"
-								onClick={updateSettings}
-							>
-								Apply
-							</Button>
+							{modified && (
+								<Button
+									color="primary"
+									variant="contained"
+									onClick={updateSettings}
+								>
+									Apply
+								</Button>
+							)}
+
+							{loading && <CircularProgress />}
+
+							{success && (
+								<CheckIcon
+									style={{
+										color: green[500],
+										marginTop: '0.5em',
+									}}
+									fontSize="large"
+								/>
+							)}
 						</Grid>
 					</Grid>
 				</form>
@@ -127,8 +169,13 @@ const Settings = (props) => {
 			{/*{JSON.stringify(settings)}*/}
 			{showSettings && (
 				<Grid container>
-					<Typography gutterBottom></Typography>
+					<Typography gutterBottom />
 				</Grid>
+			)}
+			{error && (
+				<Alert severity="error">
+					Settings could not be updated — {error}
+				</Alert>
 			)}
 		</section>
 	);

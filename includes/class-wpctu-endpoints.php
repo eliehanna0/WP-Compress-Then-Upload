@@ -28,7 +28,17 @@ class WPCTU_Endpoints {
 			'/upload',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'api_callback' ),
+				'callback'            => array( $this, 'api_upload_images' ),
+				'permission_callback' => array( $this, 'check_permission' ),
+			)
+		);
+
+		register_rest_route(
+			$this->get_api_namespace(),
+			'/settings',
+			array(
+				'methods'             => WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'api_update_settings' ),
 				'permission_callback' => array( $this, 'check_permission' ),
 			)
 		);
@@ -54,7 +64,7 @@ class WPCTU_Endpoints {
 	 *
 	 * @return WP_Error|WP_REST_Response
 	 */
-	public function api_callback() {
+	public function api_upload_images() {
 		try {
 			new WPCTU_Upload_Image();
 
@@ -69,6 +79,29 @@ class WPCTU_Endpoints {
 		} catch ( Exception $e ) {
 			return new WP_Error( 'wpctu_error', $e->getMessage(), array( 'status' => 400 ) );
 
+		}
+
+	}
+
+	/**
+	 * Handles updating settings
+	 */
+	public function api_update_settings( $request ) {
+		try {
+
+			$settings         = new WPCTU_Settings();
+			$updated_settings = $settings->save( $request->get_params() );
+
+			return new WP_REST_RESPONSE(
+				array(
+					'success' => true,
+					'data'    => $updated_settings,
+				),
+				200
+			);
+
+		} catch ( Exception $e ) {
+			return new WP_Error( 'wpctu_error', $e->getMessage(), array( 'status' => 400 ) );
 		}
 
 	}

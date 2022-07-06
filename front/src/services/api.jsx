@@ -14,6 +14,14 @@ class Api {
 			onUploadProgress,
 		});
 	}
+
+	updateSettings(data) {
+		return http.put('/settings', data, {
+			headers: {
+				'X-WP-Nonce': window.wpctu_ajax.nonce,
+			},
+		});
+	}
 }
 
 export default new Api();
