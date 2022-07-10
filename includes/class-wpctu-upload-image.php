@@ -8,6 +8,7 @@
 class  WPCTU_Upload_Image {
 
 	private $files = array();
+	private $request;
 
 	/**
 	 * WPCTU_Upload_Image constructor.
@@ -15,7 +16,8 @@ class  WPCTU_Upload_Image {
 	 *
 	 * @throws Exception Error message produced by missing or invalid file.
 	 */
-	function __construct() {
+	function __construct($request) {
+		$this->request =$request;
 		$this->set_files();
 		$this->validate_files();
 		$this->upload_files();
@@ -26,7 +28,7 @@ class  WPCTU_Upload_Image {
 	 * Assigns $_FILES to class variable.
 	 */
 	private function set_files() {
-		$this->files = $_FILES;
+		$this->files = $this->request->get_file_params();
 	}
 
 	/**
@@ -36,7 +38,7 @@ class  WPCTU_Upload_Image {
 	 */
 	private function validate_files() {
 
-		$file = $this->files['file'];
+		$file = isset( $this->files['file'] ) ? $this->files['file'] : array();
 		if ( empty( $file ) ) {
 			throw new Exception( 'Invalid or empty file' );
 		}

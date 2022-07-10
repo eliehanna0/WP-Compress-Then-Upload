@@ -62,11 +62,13 @@ class WPCTU_Endpoints {
 	/**
 	 * Handles image upload responses.
 	 *
+	 * @param WP_REST_Request $request
+	 *
 	 * @return WP_Error|WP_REST_Response
 	 */
-	public function api_upload_images() {
+	public function api_upload_images( $request ) {
 		try {
-			new WPCTU_Upload_Image();
+			new WPCTU_Upload_Image( $request );
 
 			return new WP_REST_RESPONSE(
 				array(
@@ -94,7 +96,7 @@ class WPCTU_Endpoints {
 		try {
 
 			$settings         = new WPCTU_Settings();
-			$updated_settings = $settings->save( $request->get_params() );
+			$updated_settings = $settings->save( $request->get_json_params() );
 
 			return new WP_REST_RESPONSE(
 				array(
