@@ -1,12 +1,14 @@
 {
   "require": {
-    "squizlabs/php_codesniffer": "*"
+    "squizlabs/php_codesniffer": "*",
+    "phpunit/phpunit": "^9.5"
 
   },
   "require-dev": {
     "wp-coding-standards/wpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
-    "phpcompatibility/php-compatibility": "^9.3"
+    "phpcompatibility/php-compatibility": "^9.3",
+    "yoast/phpunit-polyfills": "^1.0"
   },
   "scripts": {
     "phpcs": "phpcs --standard=WordPress",
