@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Compress Then Upload
  * Plugin URI: https://github.com/eliehanna0/WP-Compress-Then-Upload
- * Description: to be created
+ * Description: An image uploader that resizes and compresses images before getting uploaded.
  * Version: 1.0
  * Author: Elie Hanna
  * Author URI: https://elie.gatolabs.com
