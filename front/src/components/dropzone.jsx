@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
-import Thumbs from './thumbs';
-import Api from '../services/api';
-import { Button, Typography } from '@material-ui/core';
+import Thumbs from './thumbs.jsx';
+import Api from '../services/api.jsx';
+import Settings from './settings.jsx';
+import { Box, Button, Typography } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
-function DropZone(props) {
+function DropZone() {
 	const [files, setFiles] = useState([]);
 	const [status, setStatus] = useState('idle');
 	const [errorMessage, setErrorMessage] = useState('');
-	const maxFiles = 16;
-	const maxSize = 50000000;
+	const validCompressionFormats = ['JPEG', 'PNG', 'WEBP'];
+	const maxFiles = 50;
+	const maxSize = 100000000; // 1000000 = 1MB
+	const [settings, setSettings] = useState();
 
 	const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
-		accept: 'image/jpeg, image/png',
+		accept: 'image/jpeg, image/png, image/webp',
 		maxFiles,
 		maxSize, //50mb limit,
 
@@ -79,8 +82,8 @@ function DropZone(props) {
 		uploadFile(currentFiles, name, uri);
 	};
 
-	const allFilesDone = (allFilesDone) => {
-		for (const file of allFilesDone) {
+	const allFilesDone = (filesDone) => {
+		for (const file of filesDone) {
 			if (file.status === 'uploading') {
 				return false;
 			}
@@ -88,18 +91,25 @@ function DropZone(props) {
 		setStatus('idle');
 	};
 
+	const getFileFormat = (file) => {
+		const fileFormat = file.type.split('/')[1].toUpperCase();
+
+		return validCompressionFormats.includes(fileFormat)
+			? fileFormat
+			: 'JPEG';
+	};
+
 	const resizeImages = (acceptedFiles) => {
 		//Todo: lock further upload of files
 		clearImages();
-
 		for (const file of acceptedFiles) {
 			try {
 				Resizer.imageFileResizer(
 					file,
-					1024,
-					1024,
-					'JPEG',
-					80,
+					settings.max_width,
+					settings.max_height,
+					getFileFormat(file),
+					settings.quality,
 					0,
 					(uri) => {
 						resizeCallback(acceptedFiles, uri, file.name);
@@ -120,9 +130,15 @@ function DropZone(props) {
 			);
 		})
 			.then((response) => {
-				const status = response.status === 200 ? 'done' : 'error';
+				const responseStatus =
+					response.status === 200 ? 'done' : 'error';
 				setFiles(
-					updateFileByName(currentFiles, name, 'status', status)
+					updateFileByName(
+						currentFiles,
+						name,
+						'status',
+						responseStatus
+					)
 				);
 
 				allFilesDone(currentFiles);
@@ -132,16 +148,24 @@ function DropZone(props) {
 			});
 	};
 
+	const updateSettings = (newSettings) => {
+		setSettings(newSettings);
+	};
+
 	return (
 		<section className="container">
+			{/*{JSON.stringify(settings)}*/}
+			<Box textAlign="left">
+				<Typography variant="h5" gutterBottom>
+					Compress Then Upload Images
+				</Typography>
+			</Box>
 			<div {...getRootProps({ className: 'dropzone' })}>
 				<Thumbs files={files} />
 
 				<input {...getInputProps()} />
-				{/*TODO: conditionally show this message below*/}
 				{!files.length && <p>Drag images to upload </p>}
 			</div>
-
 			<Typography
 				variant="caption"
 				display="block"
@@ -163,6 +187,8 @@ function DropZone(props) {
 					<ul>{fileRejectionItems}</ul>
 				</Alert>
 			)}
+
+			<Settings onUpdate={updateSettings} />
 		</section>
 	);
 }

@@ -9,7 +9,7 @@ class WPCTU_Assets {
 	 *
 	 * @var string
 	 */
-	private string $dev_path = 'http://localhost:3000/wp-content/plugins/wp-compress-then-upload';
+	private string $dev_path = 'http://localhost:3000/wp-content/plugins/wp-compress-then-upload/';
 
 	/**
 	 * The top level directory in which assets are going to be loaded from.
@@ -23,9 +23,7 @@ class WPCTU_Assets {
 	 */
 	public function register_scripts() {
 		if ( $this->is_dev_env() ) {
-
 			$this->register_dev_scripts();
-
 		} else {
 			$this->register_prod_scripts();
 		}
@@ -38,12 +36,14 @@ class WPCTU_Assets {
 	 *
 	 * @return bool
 	 */
-	private function is_dev_env() {
-		/**
-		 * I want to force loading the production files for now
-		 */
+	private function is_dev_env(): bool {
+
+		if ( defined( 'WPCTU_DEV_ENV' ) ) {
+			return WPCTU_DEV_ENV;
+		}
+
 		return false;
-		// return in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ), true );
+
 	}
 
 	/**
@@ -96,18 +96,21 @@ class WPCTU_Assets {
 	}
 
 	/**
-	 * This function allows our app to use the API securely
+	 * Allows our app to use the API securely, and transports settings to
+	 * front-end.
 	 */
 	private function localize_scripts() {
+		$settings = new WPCTU_Settings();
 		wp_localize_script(
 			WPCTU_PREFIX . 'react_js',
 			WPCTU_PREFIX . 'ajax',
 			array(
-				'urls'  => array(
+				'urls'     => array(
 					'baseURL' => WPCTU_Endpoints::get_rest_url( '' ),
 					'upload'  => WPCTU_Endpoints::get_rest_url( '/upload' ),
 				),
-				'nonce' => wp_create_nonce( 'wp_rest' ),
+				'nonce'    => wp_create_nonce( 'wp_rest' ),
+				'settings' => $settings->get(),
 			)
 		);
 	}

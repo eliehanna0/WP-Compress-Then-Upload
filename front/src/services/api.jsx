@@ -1,4 +1,4 @@
-import http from './http';
+import http from './http.jsx';
 
 class Api {
 	upload(file, onUploadProgress) {
@@ -12,6 +12,14 @@ class Api {
 				'X-WP-Nonce': window.wpctu_ajax.nonce,
 			},
 			onUploadProgress,
+		});
+	}
+
+	updateSettings(data) {
+		return http.put('/settings', data, {
+			headers: {
+				'X-WP-Nonce': window.wpctu_ajax.nonce,
+			},
 		});
 	}
 }

@@ -52,6 +52,7 @@ class WP_Compress_Then_Upload {
 	 */
 	function admin_page() {
 		$this->assets->enqueue();
+
 		?>
 		<div id="wpctu_root">
 			Loading...

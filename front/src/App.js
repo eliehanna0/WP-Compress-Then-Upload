@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import WPCTU from './components/WPCTU';
+import WPCTU from './components/WPCTU.jsx';
 import { CssBaseline } from '@material-ui/core/';
 
 const App = () => {
