@@ -16,7 +16,7 @@ A plugin that allows uploading images that are resized and compressed client sid
 - Enjoy!
 
 ## Todo 
-- Get maxWidth and maxHeight settings from Admin
+- Sequencial image upload
 - Add proper error handling for uploading images
 
 ## 
