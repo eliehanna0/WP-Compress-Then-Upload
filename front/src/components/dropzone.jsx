@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
-import Thumbs from './thumbs';
-import Api from '../services/api';
-import Settings from './settings';
+import Thumbs from './thumbs.jsx';
+import Api from '../services/api.jsx';
+import Settings from './settings.jsx';
 import { Box, Button, Typography } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
-function DropZone(props) {
+function DropZone() {
 	const [files, setFiles] = useState([]);
 	const [status, setStatus] = useState('idle');
 	const [errorMessage, setErrorMessage] = useState('');
 	const validCompressionFormats = ['JPEG', 'PNG', 'WEBP'];
-	const maxFiles = 120;
+	const maxFiles = 50;
 	const maxSize = 100000000; // 1000000 = 1MB
 	const [settings, setSettings] = useState();
 
@@ -82,8 +82,8 @@ function DropZone(props) {
 		uploadFile(currentFiles, name, uri);
 	};
 
-	const allFilesDone = (allFilesDone) => {
-		for (const file of allFilesDone) {
+	const allFilesDone = (filesDone) => {
+		for (const file of filesDone) {
 			if (file.status === 'uploading') {
 				return false;
 			}
@@ -130,9 +130,15 @@ function DropZone(props) {
 			);
 		})
 			.then((response) => {
-				const status = response.status === 200 ? 'done' : 'error';
+				const responseStatus =
+					response.status === 200 ? 'done' : 'error';
 				setFiles(
-					updateFileByName(currentFiles, name, 'status', status)
+					updateFileByName(
+						currentFiles,
+						name,
+						'status',
+						responseStatus
+					)
 				);
 
 				allFilesDone(currentFiles);

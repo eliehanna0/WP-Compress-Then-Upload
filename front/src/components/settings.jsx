@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Api from '../services/api';
+import Api from '../services/api.jsx';
 import {
 	Box,
 	Button,
@@ -52,16 +52,16 @@ const Settings = (props) => {
 		setLoading(true);
 		setModified(false);
 		Api.updateSettings(settings)
-			.then((response) => {
+			.then(() => {
 				props.onUpdate(settings);
 				setSuccess(true);
+				setModified(false);
 			})
 			.catch((responseError) => {
 				setError(responseError.response.data.message);
 			})
 			.finally(() => {
 				setLoading(false);
-				setModified(false);
 			});
 	};
 

@@ -1,4 +1,4 @@
-import http from './http';
+import http from './http.jsx';
 
 class Api {
 	upload(file, onUploadProgress) {

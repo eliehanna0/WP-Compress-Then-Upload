@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DropZone from './dropzone';
+import DropZone from './dropzone.jsx';
 
 class WPCTU extends Component {
 	render() {
