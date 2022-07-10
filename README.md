@@ -8,7 +8,7 @@ A plugin that allows uploading images that are resized and compressed client sid
 
 ## Installation
 - Unzip the plugin in `/wp-content/plugins/`
-- Install and activate the plugin by browsing `http:YOUR_SITE/wp-admin/plugins.php` 
+- Install and activate the plugin by browsing `/wp-admin/plugins.php` 
 
 ## Usage
 - Navigate to `Media -> Compress then Upload`
