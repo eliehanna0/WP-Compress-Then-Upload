@@ -1,6 +1,6 @@
-# WP Compress Then Upload
+# Compress Then Upload
 
-A plugin that allows uploading images that are resized and compressed client side before getting sent to the WordPress.
+A WordPress plugin that allows uploading images that are resized and compressed client side before getting sent to the WordPress.
 
 
 ## Demo
@@ -16,7 +16,7 @@ A plugin that allows uploading images that are resized and compressed client sid
 - Enjoy!
 
 ## Development
-- cd to `wp-content/plugins/wp-compress-then-upload/front/`
+- cd to `wp-content/plugins/compress-then-upload/front/`
 - Run `npm install`
 - Enable dev environment by setting `define( 'WPCTU_DEV_ENV', true );` in `wp-config.php`
 - Run `npm run start:craco` to watch for changes and navigate to `/wp-admin/upload.php?page=wpctu`

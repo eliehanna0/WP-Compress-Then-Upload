@@ -1,5 +1,5 @@
 {
-  "homepage": "wp-content/plugins/wp-compress-then-upload/front/build",
+  "homepage": "wp-content/plugins/compress-then-upload/front/build",
   "name": "front",
   "version": "0.1.0",
   "private": true,

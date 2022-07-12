@@ -9,7 +9,7 @@ class WPCTU_Assets {
 	 *
 	 * @var string
 	 */
-	private string $dev_path = 'http://localhost:3000/wp-content/plugins/wp-compress-then-upload/';
+	private string $dev_path = 'http://localhost:3000/wp-content/plugins/compress-then-upload/';
 
 	/**
 	 * The top level directory in which assets are going to be loaded from.

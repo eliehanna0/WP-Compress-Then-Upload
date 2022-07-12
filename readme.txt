@@ -1,4 +1,4 @@
-=== WP Compress Then Upload ===
+=== Compress Then Upload ===
 Contributors: eliehanna
 Tags: image-compression, media
 Requires at least: 4.9
@@ -12,7 +12,7 @@ Allows uploading images that are resized and compressed before getting upload to
 
 == Description ==
 
-WP Compress Then Upload lets you upload images to the WordPress media library but it first compresses and resizes them on your browser before uploading them.
+Compress Then Upload lets you upload images to the WordPress media library but it first compresses and resizes them on your browser before uploading them.
 
 This is particularly useful if you need to upload large sized images and you are using a poor internet connection or if your current WordPress site has small upload size limit.
 
