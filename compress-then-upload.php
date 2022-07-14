@@ -6,6 +6,7 @@
  * Version: 1.0
  * Author: Elie Hanna
  * Author URI: https://elie.gatolabs.com
+ * Tested up to: 6.0.1
  **/
 
 require 'includes/class-wp-compress-then-upload.php';
