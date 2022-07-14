@@ -1,3 +1,4 @@
 /vendor/
 /front/node_modules/
 /tests/
+/bin/
