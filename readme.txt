@@ -2,8 +2,8 @@
 Contributors: eliehanna
 Tags: image-compression, media
 Requires at least: 4.9
-Tested up to: 6.0.1
-Stable tag: 1.0
+Tested up to: 6.1
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -24,11 +24,24 @@ This is particularly useful if you need to upload large sized images and you are
 * Drag & Drop images into the dropzone and watch them get uploaded
 * Navigate to Media -> Library to see your uploaded images
 
+== Screenshots ==
+
+1. The Compress Then Upload main page
+2. Sample large images in size and dimensions
+3. Process of images being resized and then uploaded
+4. New optimized image size and dimensions saved in WP Media Library
+
+
 == Changelog ==
+
+= 1.0.1 =
+* Tested plugin on WordPress 6.1
+* Updated plugin description
+* Added plugin images and logo
 
 = 1.0 =
 Initial release.
 
 == Contribution ==
 
-Yes please https://github.com/eliehanna0/WP-Compress-Then-Upload
+Contributions are welcome, you may improve the plugin, solve issues or just browse the [plugin repository here](https://github.com/eliehanna0/WP-Compress-Then-Upload).
