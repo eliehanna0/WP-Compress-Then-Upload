@@ -30,7 +30,7 @@ require_once "vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php";
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( __FILE__ ) ) . '/WP-Compress-Then-Upload.php';
+	require dirname( dirname( __FILE__ ) ) . '/compress-then-upload.php';
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
