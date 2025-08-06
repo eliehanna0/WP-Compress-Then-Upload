@@ -8,13 +8,13 @@ import {
 	Slider,
 	TextField,
 	Typography,
-} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Alert from '@material-ui/lab/Alert';
-import CheckIcon from '@material-ui/icons/Check';
-import green from '@material-ui/core/colors/green';
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
+import { green } from '@mui/material/colors';
 
 const Settings = (props) => {
 	const [settings, setSettings] = useState(window.wpctu_ajax.settings);

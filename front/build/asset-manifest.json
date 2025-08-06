@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.css": "/wp-content/plugins/compress-then-upload/front/build/static/css/main.73ab2e3d.css",
+    "main.js": "/wp-content/plugins/compress-then-upload/front/build/static/js/main.d83eb80d.js",
+    "index.html": "/wp-content/plugins/compress-then-upload/front/build/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.73ab2e3d.css",
+    "static/js/main.d83eb80d.js"
+  ]
+}

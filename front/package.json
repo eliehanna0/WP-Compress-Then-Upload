@@ -4,26 +4,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.3.0",
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/lab": "^4.0.0-alpha.60",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.19",
+    "@mui/material": "^5.14.20",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1",
     "@wordpress/eslint-plugin": "^9.1.2",
-    "axios": "^0.22.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-dropzone": "^11.4.2",
-    "react-image-file-resizer": "^0.4.7",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2"
+    "axios": "^1.6.2",
+    "nth-check": "^2.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-image-file-resizer": "^0.4.8",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^3.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:craco": "craco start",
-    "build": "react-scripts build",
-    "build:craco": "craco build",
+    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build && node rename-build-files.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -46,6 +46,12 @@
     ]
   },
   "devDependencies": {
-    "@material-ui/icons": "^4.11.2"
+    "@babel/plugin-transform-object-rest-spread": "^7.23.4",
+    "cross-env": "^10.0.0"
+  },
+  "overrides": {
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31",
+    "webpack-dev-server": "^5.0.0"
   }
 }

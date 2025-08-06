@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, CircularProgress, Fab, Typography } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
+import { Box, CircularProgress, Fab, Typography } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
 
 function thumbs(props) {
 	const { files } = props;
@@ -40,11 +40,10 @@ function thumbs(props) {
 												component="div"
 												color="textSecondary"
 											>
-												{`${
-													file.progress
-														? file.progress
-														: 0
-												}%`}
+												{`${file.progress
+													? file.progress
+													: 0
+													}%`}
 											</Typography>
 										</Box>
 									</span>

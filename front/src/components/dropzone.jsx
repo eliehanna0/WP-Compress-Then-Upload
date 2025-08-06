@@ -5,8 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import Thumbs from './thumbs.jsx';
 import Api from '../services/api.jsx';
 import Settings from './settings.jsx';
-import { Box, Button, Typography } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Box, Button, Typography, Alert, AlertTitle } from '@mui/material';
 
 function DropZone() {
 	const [files, setFiles] = useState([]);

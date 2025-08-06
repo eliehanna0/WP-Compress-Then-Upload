@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import WPCTU from './components/WPCTU.jsx';
-import { CssBaseline } from '@material-ui/core/';
+import { CssBaseline } from '@mui/material';
 
 const App = () => {
 	return (
