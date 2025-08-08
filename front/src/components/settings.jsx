@@ -4,21 +4,29 @@ import {
 	Box,
 	Button,
 	Grid,
-	IconButton,
+
 	Slider,
 	TextField,
 	Typography,
+	Accordion,
+	AccordionSummary,
+	AccordionDetails,
+	Stack,
+	Alert,
+	LinearProgress,
+	Snackbar
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import CircularProgress from '@mui/material/CircularProgress';
-import Alert from '@mui/material/Alert';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import SettingsIcon from '@mui/icons-material/Settings';
 import CheckIcon from '@mui/icons-material/Check';
-import { green } from '@mui/material/colors';
+import SaveIcon from '@mui/icons-material/Save';
+
+
+
 
 const Settings = (props) => {
 	const [settings, setSettings] = useState(window.wpctu_ajax.settings);
-	const [showSettings, setShowSettings] = useState(false);
+	const [expanded, setExpanded] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [modified, setModified] = useState(false);
 	const [error, setError] = useState('');
@@ -38,6 +46,7 @@ const Settings = (props) => {
 		setSettings(newSettings);
 		resetStates();
 	};
+	
 
 	const handleSliderChange = (event, newValue) => {
 		const newSettings = {
@@ -65,8 +74,8 @@ const Settings = (props) => {
 			});
 	};
 
-	const toggleSettings = () => {
-		setShowSettings(!showSettings);
+	const handleAccordionChange = (event, isExpanded) => {
+		setExpanded(isExpanded);
 	};
 
 	useEffect(() => {
@@ -74,111 +83,128 @@ const Settings = (props) => {
 	}, []);
 
 	return (
-		<section className="container">
-			<Grid container>
-				<Typography onClick={toggleSettings} variant="h6" gutterBottom>
-					Settings
-					<IconButton
-						style={{ marginLeft: '.5em' }}
-						color="primary"
-						variant="contained"
-						size="small"
-					>
-						{!showSettings && <AddIcon fontSize="large" />}
-						{showSettings && <RemoveIcon fontSize="large" />}
-					</IconButton>
-				</Typography>
-			</Grid>
-			{showSettings && (
-				<form
-					className="wpctu_settings_form"
-					noValidate
-					autoComplete="off"
+		<Box>
+			<Accordion
+				expanded={expanded}
+				onChange={handleAccordionChange}
+				sx={{
+					'&:before': { display: 'none' },
+					boxShadow: 'none',
+					border: '1px solid',
+					borderColor: 'divider'
+				}}
+			>
+				<AccordionSummary
+					expandIcon={<ExpandMoreIcon />}
+					sx={{
+						'&:hover': { bgcolor: 'action.hover' },
+						cursor: 'pointer'
+					}}
 				>
-					<Grid container justifyContent="flex-start" spacing={3}>
-						<Grid item xs={3}>
-							<TextField
-								fullWidth
-								label="Max Width"
-								type="number"
-								InputLabelProps={{
-									shrink: true,
-								}}
-								value={settings.max_width}
-								name="max_width"
-								onChange={handleChange}
-							/>
-						</Grid>
-						<Grid item xs={3}>
-							<TextField
-								fullWidth
-								label="Max Height"
-								type="number"
-								InputLabelProps={{
-									shrink: true,
-								}}
-								value={settings.max_height}
-								name="max_height"
-								onChange={handleChange}
-							/>
-						</Grid>
-						<Grid item xs={4}>
-							<Box textAlign="left">
-								<Typography
-									gutterBottom
-									style={{ marginBottom: '0.55em' }}
-								>
-									Quality
-								</Typography>
-							</Box>
-							<Grid container spacing={2} alignItems="center">
-								<Grid item xs>
-									<Slider
-										value={settings.quality}
-										onChange={handleSliderChange}
-										valueLabelDisplay="auto"
-									/>
-								</Grid>
+					<Stack direction="row" spacing={1} alignItems="center">
+						<SettingsIcon color="primary" />
+						<Typography variant="h6">Compression Settings</Typography>
+					</Stack>
+				</AccordionSummary>
+				<AccordionDetails>
+					<Stack >
+						{loading && <LinearProgress />}
+						<Grid container sx={{ gap: 2, flexWrap: 'nowrap' }}>
+							<Grid item xs={12} sm={6}>
+								<TextField
+									fullWidth
+									variant="outlined"
+									label="Max Width (px)"
+									type="number"
+									value={settings.max_width}
+									name="max_width"
+									onChange={handleChange}
+									helperText="Maximum image width"
+									InputProps={{
+										inputProps: { min: 0 }
+									}}
+								/>
+							</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextField
+									fullWidth
+									variant="outlined"
+									label="Max Height (px)"
+									type="number"
+									value={settings.max_height}
+									name="max_height"
+									onChange={handleChange}
+									helperText="Maximum image height"
+									InputProps={{
+										inputProps: { min: 0 }
+									}}
+								/>
 							</Grid>
 						</Grid>
-						<Grid item xs={2}>
+
+						<Box sx={{ pt: 2 }}>
+							<Typography variant="subtitle1" gutterBottom>
+								Quality: {settings.quality}%
+							</Typography>
+							<Slider
+								value={settings.quality}
+								onChange={handleSliderChange}
+								valueLabelDisplay="auto"
+								min={1}
+								max={100}
+								marks={[
+									{ value: 1, label: '1%' },
+									{ value: 50, label: '50%' },
+									{ value: 100, label: '100%' }
+								]}
+								sx={{ 
+									'& .MuiSlider-markLabel': { 
+										color: 'text.secondary' 
+									}
+								}}
+							/>
+							<Typography variant="caption" color="text.secondary">
+								Lower values = smaller file size, lower quality
+							</Typography>
+						</Box>
+
+						<Box sx={{ pt: 2, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
 							{modified && (
 								<Button
 									color="primary"
 									variant="contained"
 									onClick={updateSettings}
+									startIcon={<SaveIcon />}
+									disabled={loading}
 								>
-									Apply
+									{loading ? 'Saving...' : 'Save Settings'}
 								</Button>
 							)}
-
-							{loading && <CircularProgress />}
-
 							{success && (
-								<CheckIcon
-									style={{
-										color: green[500],
-										marginTop: '0.5em',
-									}}
-									fontSize="large"
-								/>
+								<Button
+									variant="outlined"
+									color="success"
+									startIcon={<CheckIcon />}
+									disabled
+								>
+									Saved
+								</Button>
 							)}
-						</Grid>
-					</Grid>
-				</form>
-			)}
-			{/*{JSON.stringify(settings)}*/}
-			{showSettings && (
-				<Grid container>
-					<Typography gutterBottom />
-				</Grid>
-			)}
-			{error && (
-				<Alert severity="error">
+						</Box>
+					</Stack>
+				</AccordionDetails>
+			</Accordion>
+
+			<Snackbar
+				open={!!error}
+				autoHideDuration={6000}
+				onClose={() => setError('')}
+			>
+				<Alert severity="error" onClose={() => setError('')}>
 					Settings could not be updated — {error}
 				</Alert>
-			)}
-		</section>
+			</Snackbar>
+		</Box>
 	);
 };
 

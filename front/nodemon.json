@@ -1,0 +1,16 @@
+{
+  "verbose": false,
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "build",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "src/reportWebVitals.js",
+    "src/setupTests.js"
+  ],
+  "delay": "250",
+  "events": {
+    "restart": "cls"
+  }
+}

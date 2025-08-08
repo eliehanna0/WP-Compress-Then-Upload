@@ -8,7 +8,6 @@ const cssDir = path.join(buildDir, 'static', 'css');
 // Function to rename files
 function renameFiles(directory, extension) {
     if (!fs.existsSync(directory)) {
-        console.log(`Directory ${directory} does not exist`);
         return;
     }
 
@@ -20,18 +19,25 @@ function renameFiles(directory, extension) {
         const newPath = path.join(directory, `main${extension}`);
 
         try {
+            // If the new file already exists and is the same as the old file, skip
+            if (fs.existsSync(newPath)) {
+                const oldStats = fs.statSync(oldPath);
+                const newStats = fs.statSync(newPath);
+                
+                if (oldStats.size === newStats.size && oldStats.mtimeMs === newStats.mtimeMs) {
+                    return;
+                }
+                fs.unlinkSync(newPath);
+            }
+            
             fs.renameSync(oldPath, newPath);
-            console.log(`Renamed ${targetFile} to main${extension}`);
+            console.log(`✅ Updated ${path.basename(newPath)}`);
         } catch (error) {
-            console.error(`Error renaming ${targetFile}:`, error);
+            console.error(`❌ Error processing ${targetFile}:`, error.message);
         }
-    } else {
-        console.log(`No main file found in ${directory}`);
     }
 }
 
-// Rename JS and CSS files
+// Process both file types
 renameFiles(jsDir, '.js');
 renameFiles(cssDir, '.css');
-
-console.log('Build files renamed successfully!'); 
