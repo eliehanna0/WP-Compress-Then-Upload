@@ -1,2 +1,4 @@
 /vendor/
 /front/node_modules/
+/front/src/.sass-cache/
+

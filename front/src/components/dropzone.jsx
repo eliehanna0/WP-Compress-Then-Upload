@@ -172,7 +172,7 @@ function DropZone() {
 			<Stack spacing={3}>
 				<Box>
 					<Typography variant="h4" component="h1" gutterBottom>
-						Compress Then Upload Images
+						Compress & Upload Images
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
 						Upload and compress your images before they&apos;re saved to your WordPress media library

@@ -1,7 +1,17 @@
-# Compress Then Upload
+# Compress & Upload
 
-A WordPress plugin that allows uploading images that are resized and compressed client side before getting sent to the WordPress.
+A WordPress plugin that allows uploading images that are resized and compressed client-side before getting sent to WordPress. This plugin was created to solve a common problem where customers struggle with large image uploads due to hosting provider file size limits.
 
+## Why This Plugin?
+
+Many WordPress users face frustrating upload failures when trying to add high-quality images to their sites. This often happens because:
+
+- **Hosting provider limits**: Many shared hosting providers have strict file upload size limits (often 2-8MB)
+- **Large image files**: Modern cameras and phones create images that are unnecessarily large for web use
+- **Manual compression is time-consuming**: Users shouldn't need to manually compress every image before uploading
+- **Server performance**: Client-side compression reduces server CPU usage and prevents crashes that can occur when processing large images on the server
+
+This plugin solves these problems by automatically compressing and resizing images in the browser before upload, ensuring your images are web-ready while staying within your hosting provider's limits and keeping your server running smoothly.
 
 ## Demo
 ![wpctu_demo](https://user-images.githubusercontent.com/76950619/137004970-eca5ccda-a792-4e4f-9845-72b2309d08fe.gif)
@@ -11,7 +21,7 @@ A WordPress plugin that allows uploading images that are resized and compressed 
 - Install and activate the plugin by browsing `/wp-admin/plugins.php` 
 
 ## Usage
-- Navigate to `Media -> Compress then Upload`
+- Navigate to `Media -> Compress & Upload`
 - Upload some files
 - Enjoy!
 
@@ -24,7 +34,7 @@ A WordPress plugin that allows uploading images that are resized and compressed 
 
 
 ## Todo 
-- Sequencial image upload
+- Sequential image upload
 - Add proper error handling for uploading images
 
 ## 

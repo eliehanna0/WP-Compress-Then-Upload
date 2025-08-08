@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Compress Then Upload
+ * Plugin Name: Compress & Upload
  * Plugin URI: https://github.com/eliehanna0/WP-Compress-Then-Upload
- * Description: An image uploader that resizes and compresses images before getting uploaded.
+ * Description: Compress & Upload images | Automatic Image Optimization
  * Version: 1.0.3
  * Author: Elie Hanna
  * Author URI: https://elie.gatolabs.com
@@ -16,7 +16,7 @@ require 'includes/class-wpctu-upload-image.php';
 require 'includes/class-wpctu-settings.php';
 
 define( 'WPCTU_PREFIX', 'wpctu_' );
-define( 'WPCTU_TITLE', 'Compress Then Upload' );
+define( 'WPCTU_TITLE', 'Compress & Upload' );
 define( 'WPCTU_URL', plugin_dir_url( __FILE__ ) );
 
 

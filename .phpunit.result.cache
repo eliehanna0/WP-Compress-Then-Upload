@@ -1,0 +1,1 @@
+{"version":1,"defects":{"WPCTU_Test::test_routes_are_registered":3,"WPCTU_Test::test_upload_image":3,"WPCTU_Test::test_settings_update_correctly":3},"times":{"SampleTest::test_sample":0.0050000000000000001,"WPCTU_Test::test_routes_are_registered":0.02,"WPCTU_Test::test_upload_image":0.016,"WPCTU_Test::test_settings_update_correctly":0.0080000000000000002}}
