@@ -5,9 +5,8 @@
  *
  * Handles images uploads and saves them into the WP media library.
  */
-class  WPCTU_Upload_Image
+class WPCTU_Upload_Image
 {
-
 	private $files = array();
 	private $request;
 	private $allowed_image_types = array(
@@ -51,7 +50,6 @@ class  WPCTU_Upload_Image
 	 */
 	private function validate_files()
 	{
-
 		$file = isset($this->files['file']) ? $this->files['file'] : array();
 		if (empty($file)) {
 			throw new Exception('Invalid or empty file');
@@ -154,12 +152,11 @@ class  WPCTU_Upload_Image
 
 	/**
 	 * Loops through each of the submitted files uploads them then adds each one
-	 * of them as attachments.
+	 * of them as attachments using WordPress built-in functions.
 	 */
 	private function upload_files()
 	{
 		$file = $this->files['file'];
-
 		$gallery = array();
 
 		$wordpress_upload_dir = wp_upload_dir();
