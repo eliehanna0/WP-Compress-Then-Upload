@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import Api from '../services/api.jsx';
 import {
@@ -13,7 +14,7 @@ import {
 	AccordionDetails,
 	Stack,
 	Alert,
-	LinearProgress,
+	CircularProgress,
 	Snackbar
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -46,7 +47,7 @@ const Settings = (props) => {
 		setSettings(newSettings);
 		resetStates();
 	};
-	
+
 
 	const handleSliderChange = (event, newValue) => {
 		const newSettings = {
@@ -108,7 +109,8 @@ const Settings = (props) => {
 				</AccordionSummary>
 				<AccordionDetails>
 					<Stack >
-						{loading && <LinearProgress />}
+
+
 						<Grid container sx={{ gap: 2, flexWrap: 'nowrap' }}>
 							<Grid item xs={12} sm={6}>
 								<TextField
@@ -157,9 +159,9 @@ const Settings = (props) => {
 									{ value: 50, label: '50%' },
 									{ value: 100, label: '100%' }
 								]}
-								sx={{ 
-									'& .MuiSlider-markLabel': { 
-										color: 'text.secondary' 
+								sx={{
+									'& .MuiSlider-markLabel': {
+										color: 'text.secondary'
 									}
 								}}
 							/>
@@ -169,13 +171,13 @@ const Settings = (props) => {
 						</Box>
 
 						<Box sx={{ pt: 2, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-							{modified && (
+							{(modified || loading) && (
 								<Button
 									color="primary"
 									variant="contained"
 									onClick={updateSettings}
-									startIcon={<SaveIcon />}
-									disabled={loading}
+									startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
+									disabled={loading || !modified}
 								>
 									{loading ? 'Saving...' : 'Save Settings'}
 								</Button>
@@ -191,6 +193,7 @@ const Settings = (props) => {
 								</Button>
 							)}
 						</Box>
+
 					</Stack>
 				</AccordionDetails>
 			</Accordion>

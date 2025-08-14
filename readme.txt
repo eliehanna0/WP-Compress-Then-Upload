@@ -3,7 +3,7 @@ Contributors: eliehanna
 Tags: image-compression, media, image-optimization, upload-limits
 Requires at least: 4.9
 Tested up to: 6.7.1
-Stable tag: 1.0.3
+Stable tag: 1.0.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -33,6 +33,18 @@ This is particularly useful if you need to upload large sized images and you are
 
 
 == Changelog ==
+
+
+= 1.0.5 =
+* Security update: Fixed arbitrary file upload vulnerability
+* Added comprehensive file type validation and security measures
+* Enhanced file extension whitelist and MIME type verification
+* Improved filename sanitization to prevent path traversal attacks
+
+= 1.0.4 =
+* Updated author name and URI
+* Code formatting improvements and cleanup
+* Enhanced code structure and readability
 
 
 = 1.0.3 =
